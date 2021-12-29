@@ -1,4 +1,8 @@
-
+/**
+ * the puzzle rules
+ * the 3 "next to" or "to the right of" rules have two variants each,
+ * so they create 8 combinations or 8 different rule lists of 14 rules (plus 2 which form the puzzle answer)
+ */
 val rulesList0 = arrayOf(Rule0(), Rule1(), Rule2(), Rule3(), Rule4(),
     Rule5(), Rule6(), Rule7(), Rule8(), Rule9(),
     Rule10(), Rule11(), Rule12(), Rule13(), Rule14(), Rule15(), Rule16())

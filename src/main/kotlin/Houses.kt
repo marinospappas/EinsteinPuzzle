@@ -1,3 +1,5 @@
+/** House class and attributes */
+
 enum class Nat {
     English, Spanish, Norwegian, Japanese, Ukrainian, none
 }

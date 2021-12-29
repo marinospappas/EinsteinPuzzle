@@ -1,5 +1,6 @@
-import java.sql.Time
-import java.util.*
+/**
+ * Einstein 5-houses puzzle solver
+ */
 import kotlin.system.exitProcess
 
 const val NUM_HOUSES = 5
@@ -53,7 +54,7 @@ fun solveIt(rules: Array<Rule>, houses: Array<House>, ruleIndx: Int): Array<Hous
             }
         }
         //println(">>>>> ruleIndx $ruleIndx returning null")
-        ++count;
+        ++count
         return null   // run out of houses - cannot solve
     } else {
         // all rules applied - returned the solved puzzle
