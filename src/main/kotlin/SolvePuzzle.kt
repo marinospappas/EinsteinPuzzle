@@ -1,5 +1,7 @@
 /**
  * Einstein 5-houses puzzle solver
+ * @author Marinos Pappas
+ * @version 1.0 29.12.2021
  */
 import kotlin.system.exitProcess
 
