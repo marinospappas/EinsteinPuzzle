@@ -42,24 +42,16 @@ fun solveIt(rules: Array<Rule>, houses: Array<House>, ruleIndx: Int): Array<Hous
             // apply next rule
             h = cloneHouses(houses)
             val result = rules[ruleIndx].rule(h, houseIndx)
-            //println(">>>>> rule $ruleIndx house $houseIndx result $result")
             if (!result)
                 continue    // could not apply rule - try next house
-            //printHouses(h)
-            val s = solveIt(rules, h, ruleIndx+1)
+            val s = solveIt(rules, h, ruleIndx+1)   // go and try to apply the next rule
             if (s != null) {
-                //println(">>>>> ruleIndex $ruleIndx returning GOOD solution")
-                //printHouses(s)
                 return s    // good solution
             }
         }
-        //println(">>>>> ruleIndx $ruleIndx returning null")
         ++count
         return null   // run out of houses - cannot solve
     } else {
-        // all rules applied - returned the solved puzzle
-        //println(">>>>> ruleIndx $ruleIndx returning solution")
-        //printHouses(h)
         return h
     }
 }
@@ -74,7 +66,7 @@ fun main (args: Array<String>) {
     rulesList[0][3].rule(houseList, 2)
 
     val t1 = System.nanoTime()
-    for (rules in rulesList) {
+    for (rules in rulesList) {  // try all 8 rule sets (different combinations of "next to" rules
         val solution = solveIt(rules, houseList, 4)
         if (solution != null) {
             val t2 = System.nanoTime()
