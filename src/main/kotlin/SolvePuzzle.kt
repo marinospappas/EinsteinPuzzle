@@ -21,7 +21,7 @@ fun printHouses(h: Array<House>) {
         print("${h[i].pet}\t")
         if (h[i].pet == Pet.Fox || h[i].pet == Pet.Dog) print("\t")
         print("${h[i].drink}\t")
-    if (h[i].drink == Drnk.Tea || h[i].drink == Drnk.OJ) print("\t")
+        if (h[i].drink == Drnk.Tea || h[i].drink == Drnk.OJ) print("\t")
         print("${h[i].cigarettes}")
         println()
     }
@@ -66,7 +66,7 @@ fun main (args: Array<String>) {
     rulesList[0][3].rule(houseList, 2)
 
     val t1 = System.nanoTime()
-    for (rules in rulesList) {  // try all 8 rule sets (different combinations of "next to" rules
+    for (rules in rulesList) {  // try all 8 rule sets (different combinations of "next to" rules)
         val solution = solveIt(rules, houseList, 4)
         if (solution != null) {
             val t2 = System.nanoTime()
