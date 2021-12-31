@@ -393,9 +393,6 @@ class Rule15: Rule {
         if (houseRow[indx].drink != Drnk.none
             && houseRow[indx].drink != Drnk.Water)
             return false
-        for (i in 0..4)
-            if(i != indx && houseRow[i].drink == Drnk.Water)
-                return false
         houseRow[indx].drink = Drnk.Water
         return true
     }
@@ -407,9 +404,6 @@ class Rule16: Rule {
         if (houseRow[indx].pet != Pet.none
             && houseRow[indx].pet != Pet.Zebra)
             return false
-        for (i in 0..4)
-            if(i != indx && houseRow[i].pet == Pet.Zebra)
-                return false
         houseRow[indx].pet = Pet.Zebra
         return true
     }
