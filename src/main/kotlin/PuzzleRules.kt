@@ -381,6 +381,12 @@ class Rule14: Rule {
         if (houseRow[indx+1].colour != Col.none
             && houseRow[indx+1].colour != Col.Blue)
             return false
+        for (i in 0..4)
+            if(i != indx && houseRow[i].nationality == Nat.Norwegian)
+                return false
+        for (i in 0..4)
+            if(i != indx+1 && houseRow[i].colour == Col.Blue)
+                return false
         houseRow[indx].nationality = Nat.Norwegian
         houseRow[indx+1].colour = Col.Blue
         return true
