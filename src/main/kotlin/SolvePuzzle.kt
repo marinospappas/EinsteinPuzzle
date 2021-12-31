@@ -62,14 +62,10 @@ fun main (args: Array<String>) {
 
     val rulesList = arrayListOf(rulesList0, rulesList1, rulesList2, rulesList3,
         rulesList4, rulesList5, rulesList6, rulesList7)
-    // apply the three definite rules
-    rulesList[0][1].rule(houseList, 0)
-    rulesList[0][2].rule(houseList, 0)
-    rulesList[0][3].rule(houseList, 2)
 
     val t1 = System.nanoTime()
     for (rules in rulesList) {  // try all 8 rule sets (different combinations of "next to" rules)
-        val solution = solveIt(rules, houseList, 4)
+        val solution = solveIt(rules, houseList, 1)
         if (solution != null) {
             val t2 = System.nanoTime()
             val tdiff: Long = (t2-t1)/1000

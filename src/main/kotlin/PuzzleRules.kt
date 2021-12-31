@@ -6,74 +6,124 @@
 val rulesList0 = arrayOf(Rule0(), Rule1(), Rule2(), Rule3(), Rule4(),
     Rule5(), Rule6(), Rule7(), Rule8(), Rule9(),
     Rule10(), Rule11(), Rule12(), Rule13(), Rule14(), Rule15(), Rule16())
-val rulesList1 = arrayOf(Rule0(), Rule1(), Rule2(), Rule3(), Rule4Alt(),
-    Rule5(), Rule6(), Rule7(), Rule8(), Rule9(),
+val rulesList1 = arrayOf(Rule0(), Rule1(), Rule2(), Rule3(), Rule4(),
+    Rule5Alt(), Rule6(), Rule7(), Rule8(), Rule9(),
     Rule10(), Rule11(), Rule12(), Rule13(), Rule14(), Rule15(), Rule16())
 val rulesList2 = arrayOf(Rule0(), Rule1(), Rule2(), Rule3(), Rule4(),
     Rule5(), Rule6(), Rule7(), Rule8(), Rule9(),
     Rule10(), Rule11Alt(), Rule12(), Rule13(), Rule14(), Rule15(), Rule16())
-val rulesList3 = arrayOf(Rule0(), Rule1(), Rule2(), Rule3(), Rule4Alt(),
-    Rule5(), Rule6(), Rule7(), Rule8(), Rule9(),
+val rulesList3 = arrayOf(Rule0(), Rule1(), Rule2(), Rule3(), Rule4(),
+    Rule5Alt(), Rule6(), Rule7(), Rule8(), Rule9(),
     Rule10(), Rule11Alt(), Rule12(), Rule13(), Rule14(), Rule15(), Rule16())
 val rulesList4 = arrayOf(Rule0(), Rule1(), Rule2(), Rule3(), Rule4(),
     Rule5(), Rule6(), Rule7(), Rule8(), Rule9(),
-    Rule10(), Rule11(), Rule12Alt(), Rule13(), Rule14(), Rule15(), Rule16())
-val rulesList5 = arrayOf(Rule0(), Rule1(), Rule2(), Rule3(), Rule4Alt(),
-    Rule5(), Rule6(), Rule7(), Rule8(), Rule9(),
-    Rule10(), Rule11(), Rule12Alt(), Rule13(), Rule14(), Rule15(), Rule16())
+    Rule10Alt(), Rule11(), Rule12(), Rule13(), Rule14(), Rule15(), Rule16())
+val rulesList5 = arrayOf(Rule0(), Rule1(), Rule2(), Rule3(), Rule4(),
+    Rule5Alt(), Rule6(), Rule7(), Rule8(), Rule9(),
+    Rule10Alt(), Rule11(), Rule12(), Rule13(), Rule14(), Rule15(), Rule16())
 val rulesList6 = arrayOf(Rule0(), Rule1(), Rule2(), Rule3(), Rule4(),
     Rule5(), Rule6(), Rule7(), Rule8(), Rule9(),
-    Rule10(), Rule11Alt(), Rule12Alt(), Rule13(), Rule14(), Rule15(), Rule16())
-val rulesList7 = arrayOf(Rule0(), Rule1(), Rule2(), Rule3(), Rule4Alt(),
-    Rule5(), Rule6(), Rule7(), Rule8(), Rule9(),
-    Rule10(), Rule11Alt(), Rule12Alt(), Rule13(), Rule14(), Rule15(), Rule16())
+    Rule10Alt(), Rule11Alt(), Rule12(), Rule13(), Rule14(), Rule15(), Rule16())
+val rulesList7 = arrayOf(Rule0(), Rule1(), Rule2(), Rule3(), Rule4(),
+    Rule5Alt(), Rule6(), Rule7(), Rule8(), Rule9(),
+    Rule10Alt(), Rule11Alt(), Rule12(), Rule13(), Rule14(), Rule15(), Rule16())
 
 /** the puzzle rules */
 interface Rule {
     fun rule(houseRow: Array<House>, indx: Int): Boolean
 }
 
+// dummy rule just to help the numbering
 class Rule0: Rule {
     override fun rule(houseRow: Array<House>, indx: Int): Boolean = true
 }
 
+//The Englishman lives in the red house
 class Rule1: Rule {
     override fun rule(houseRow: Array<House>, indx: Int): Boolean {
         if (houseRow[indx].nationality != Nat.none
-            && houseRow[indx].nationality != Nat.Norwegian)
+            && houseRow[indx].nationality != Nat.English)
             return false
-        houseRow[indx].nationality = Nat.Norwegian
+        if (houseRow[indx].colour != Col.none
+            && houseRow[indx].colour != Col.Red)
+            return false
+        for (i in 0..4)
+            if(i != indx && houseRow[i].nationality == Nat.English)
+                return false
+        for (i in 0..4)
+            if(i != indx && houseRow[i].colour == Col.Red)
+                return false
+        houseRow[indx].nationality = Nat.English
+        houseRow[indx].colour = Col.Red
         return true
     }
 }
 
+// The Spaniard owns the dog
 class Rule2: Rule {
     override fun rule(houseRow: Array<House>, indx: Int): Boolean {
-        if (indx >= 4)
-            return false
         if (houseRow[indx].nationality != Nat.none
-            && houseRow[indx].nationality != Nat.Norwegian)
+            && houseRow[indx].nationality != Nat.Spanish)
             return false
-        if (houseRow[indx+1].colour != Col.none
-            && houseRow[indx+1].colour != Col.Blue)
+        if (houseRow[indx].pet != Pet.none
+            && houseRow[indx].pet != Pet.Dog)
             return false
-        houseRow[indx].nationality = Nat.Norwegian
-        houseRow[indx+1].colour = Col.Blue
+        for (i in 0..4)
+            if(i != indx && houseRow[i].nationality == Nat.Spanish)
+                return false
+        for (i in 0..4)
+            if(i != indx && houseRow[i].pet == Pet.Dog)
+                return false
+        houseRow[indx].nationality = Nat.Spanish
+        houseRow[indx].pet = Pet.Dog
         return true
     }
 }
 
+// Coffee is drunk in the green house
 class Rule3: Rule {
     override fun rule(houseRow: Array<House>, indx: Int): Boolean {
         if (houseRow[indx].drink != Drnk.none
-            && houseRow[indx].drink != Drnk.Milk)
+            && houseRow[indx].drink != Drnk.Coffee)
             return false
-        houseRow[indx].drink = Drnk.Milk
+        if (houseRow[indx].colour != Col.none
+            && houseRow[indx].colour != Col.Green)
+            return false
+        for (i in 0..4)
+            if(i != indx && houseRow[i].drink == Drnk.Coffee)
+                return false
+        for (i in 0..4)
+            if(i != indx && houseRow[i].colour == Col.Green)
+                return false
+        houseRow[indx].drink = Drnk.Coffee
+        houseRow[indx].colour = Col.Green
         return true
     }
 }
 
+// The Ukrainian drinks tea
 class Rule4: Rule {
+    override fun rule(houseRow: Array<House>, indx: Int): Boolean {
+        if (houseRow[indx].nationality != Nat.none
+            && houseRow[indx].nationality != Nat.Ukrainian)
+            return false
+        if (houseRow[indx].drink != Drnk.none
+            && houseRow[indx].drink != Drnk.Tea)
+            return false
+        for (i in 0..4)
+            if(i != indx && houseRow[i].nationality == Nat.Ukrainian)
+                return false
+        for (i in 0..4)
+            if(i != indx && houseRow[i].drink == Drnk.Tea)
+                return false
+        houseRow[indx].nationality = Nat.Ukrainian
+        houseRow[indx].drink = Drnk.Tea
+        return true
+    }
+}
+
+// The green house is immediately to the right of the ivory house
+class Rule5: Rule {
     override fun rule(houseRow: Array<House>, indx: Int): Boolean {
         if (indx >= 4)
             return false
@@ -95,7 +145,8 @@ class Rule4: Rule {
     }
 }
 
-class Rule4Alt: Rule {
+// The green house is immediately to the right of the ivory house (alternative)
+class Rule5Alt: Rule {
     override fun rule(houseRow: Array<House>, indx: Int): Boolean {
         if (indx >= 4)
             return false
@@ -117,87 +168,8 @@ class Rule4Alt: Rule {
     }
 }
 
-class Rule5: Rule {
-    override fun rule(houseRow: Array<House>, indx: Int): Boolean {
-        if (houseRow[indx].nationality != Nat.none
-            && houseRow[indx].nationality != Nat.English)
-            return false
-        if (houseRow[indx].colour != Col.none
-            && houseRow[indx].colour != Col.Red)
-            return false
-        for (i in 0..4)
-            if(i != indx && houseRow[i].nationality == Nat.English)
-                return false
-        for (i in 0..4)
-            if(i != indx && houseRow[i].colour == Col.Red)
-                return false
-        houseRow[indx].nationality = Nat.English
-        houseRow[indx].colour = Col.Red
-        return true
-    }
-}
-
+// The Old Gold smoker owns snails
 class Rule6: Rule {
-    override fun rule(houseRow: Array<House>, indx: Int): Boolean {
-        if (houseRow[indx].nationality != Nat.none
-            && houseRow[indx].nationality != Nat.Spanish)
-            return false
-        if (houseRow[indx].pet != Pet.none
-            && houseRow[indx].pet != Pet.Dog)
-            return false
-        for (i in 0..4)
-            if(i != indx && houseRow[i].nationality == Nat.Spanish)
-                return false
-        for (i in 0..4)
-            if(i != indx && houseRow[i].pet == Pet.Dog)
-                return false
-        houseRow[indx].nationality = Nat.Spanish
-        houseRow[indx].pet = Pet.Dog
-        return true
-    }
-}
-
-class Rule7: Rule {
-    override fun rule(houseRow: Array<House>, indx: Int): Boolean {
-        if (houseRow[indx].drink != Drnk.none
-            && houseRow[indx].drink != Drnk.Coffee)
-            return false
-        if (houseRow[indx].colour != Col.none
-            && houseRow[indx].colour != Col.Green)
-            return false
-        for (i in 0..4)
-            if(i != indx && houseRow[i].drink == Drnk.Coffee)
-                return false
-        for (i in 0..4)
-            if(i != indx && houseRow[i].colour == Col.Green)
-                return false
-        houseRow[indx].drink = Drnk.Coffee
-        houseRow[indx].colour = Col.Green
-        return true
-    }
-}
-
-class Rule8: Rule {
-    override fun rule(houseRow: Array<House>, indx: Int): Boolean {
-        if (houseRow[indx].nationality != Nat.none
-            && houseRow[indx].nationality != Nat.Ukrainian)
-            return false
-        if (houseRow[indx].drink != Drnk.none
-            && houseRow[indx].drink != Drnk.Tea)
-            return false
-        for (i in 0..4)
-            if(i != indx && houseRow[i].nationality == Nat.Ukrainian)
-                return false
-        for (i in 0..4)
-            if(i != indx && houseRow[i].drink == Drnk.Tea)
-                return false
-        houseRow[indx].nationality = Nat.Ukrainian
-        houseRow[indx].drink = Drnk.Tea
-        return true
-    }
-}
-
-class Rule9: Rule {
     override fun rule(houseRow: Array<House>, indx: Int): Boolean {
         if (houseRow[indx].cigarettes != Cig.none
             && houseRow[indx].cigarettes != Cig.OldGold)
@@ -217,7 +189,8 @@ class Rule9: Rule {
     }
 }
 
-class Rule10: Rule {
+// Kools are smoked in the yellow house
+class Rule7: Rule {
     override fun rule(houseRow: Array<House>, indx: Int): Boolean {
         if (houseRow[indx].cigarettes != Cig.none
             && houseRow[indx].cigarettes != Cig.Kools)
@@ -237,7 +210,34 @@ class Rule10: Rule {
     }
 }
 
-class Rule11: Rule {
+// Milk is drunk in the middle house
+class Rule8: Rule {
+    override fun rule(houseRow: Array<House>, indx: Int): Boolean {
+        if (indx != NUM_HOUSES/2)
+            return false
+        if (houseRow[indx].drink != Drnk.none
+            && houseRow[indx].drink != Drnk.Milk)
+            return false
+        houseRow[indx].drink = Drnk.Milk
+        return true
+    }
+}
+
+// The Norwegian lives in the first house
+class Rule9: Rule {
+    override fun rule(houseRow: Array<House>, indx: Int): Boolean {
+        if (indx != 0)
+            return false
+        if (houseRow[indx].nationality != Nat.none
+            && houseRow[indx].nationality != Nat.Norwegian)
+            return false
+        houseRow[indx].nationality = Nat.Norwegian
+        return true
+    }
+}
+
+// The man who smokes Chesterfields lives in the house next to the man with the fox
+class Rule10: Rule {
     override fun rule(houseRow: Array<House>, indx: Int): Boolean {
         if (indx >= 4)
             return false
@@ -259,7 +259,8 @@ class Rule11: Rule {
     }
 }
 
-class Rule11Alt: Rule {
+// The man who smokes Chesterfields lives in the house next to the man with the fox (alternative)
+class Rule10Alt: Rule {
     override fun rule(houseRow: Array<House>, indx: Int): Boolean {
         if (indx >= 4)
             return false
@@ -281,7 +282,8 @@ class Rule11Alt: Rule {
     }
 }
 
-class Rule12: Rule {
+// Kools are smoked in the house next to the house where the horse is kept
+class Rule11: Rule {
     override fun rule(houseRow: Array<House>, indx: Int): Boolean {
         if (indx >= 4)
             return false
@@ -303,7 +305,8 @@ class Rule12: Rule {
     }
 }
 
-class Rule12Alt: Rule {
+// Kools are smoked in the house next to the house where the horse is kept (alternative)
+class Rule11Alt: Rule {
     override fun rule(houseRow: Array<House>, indx: Int): Boolean {
         if (indx >= 4)
             return false
@@ -325,7 +328,8 @@ class Rule12Alt: Rule {
     }
 }
 
-class Rule13: Rule {
+// The Lucky Strike smoker drinks orange juice
+class Rule12: Rule {
     override fun rule(houseRow: Array<House>, indx: Int): Boolean {
         if (houseRow[indx].cigarettes != Cig.none
             && houseRow[indx].cigarettes != Cig.LuckyStrike)
@@ -345,7 +349,8 @@ class Rule13: Rule {
     }
 }
 
-class Rule14: Rule {
+// The Japanese smokes Parliaments
+class Rule13: Rule {
     override fun rule(houseRow: Array<House>, indx: Int): Boolean {
         if (houseRow[indx].nationality != Nat.none
             && houseRow[indx].nationality != Nat.Japanese)
@@ -365,6 +370,24 @@ class Rule14: Rule {
     }
 }
 
+// The Norwegian lives next to the blue house
+class Rule14: Rule {
+    override fun rule(houseRow: Array<House>, indx: Int): Boolean {
+        if (indx >= 4)
+            return false
+        if (houseRow[indx].nationality != Nat.none
+            && houseRow[indx].nationality != Nat.Norwegian)
+            return false
+        if (houseRow[indx+1].colour != Col.none
+            && houseRow[indx+1].colour != Col.Blue)
+            return false
+        houseRow[indx].nationality = Nat.Norwegian
+        houseRow[indx+1].colour = Col.Blue
+        return true
+    }
+}
+
+// Who drinks Water ??
 class Rule15: Rule {
     override fun rule(houseRow: Array<House>, indx: Int): Boolean {
         if (houseRow[indx].drink != Drnk.none
@@ -378,6 +401,7 @@ class Rule15: Rule {
     }
 }
 
+// Who owns the Zebra?
 class Rule16: Rule {
     override fun rule(houseRow: Array<House>, indx: Int): Boolean {
         if (houseRow[indx].pet != Pet.none
