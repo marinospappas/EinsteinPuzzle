@@ -3,30 +3,58 @@
  * the 3 "next to" or "to the right of" rules have two variants each,
  * so they create 8 combinations or 8 different rule lists of 14 rules (plus 2 which form the puzzle answer)
  */
-val rulesList0 = arrayOf(Rule0(), Rule1(), Rule2(), Rule3(), Rule4(),
-    Rule5(), Rule6(), Rule7(), Rule8(), Rule9(),
-    Rule10(), Rule11(), Rule12(), Rule13(), Rule14(), Rule15(), Rule16())
-val rulesList1 = arrayOf(Rule0(), Rule1(), Rule2(), Rule3(), Rule4(),
-    Rule5Alt(), Rule6(), Rule7(), Rule8(), Rule9(),
-    Rule10(), Rule11(), Rule12(), Rule13(), Rule14(), Rule15(), Rule16())
-val rulesList2 = arrayOf(Rule0(), Rule1(), Rule2(), Rule3(), Rule4(),
-    Rule5(), Rule6(), Rule7(), Rule8(), Rule9(),
-    Rule10(), Rule11Alt(), Rule12(), Rule13(), Rule14(), Rule15(), Rule16())
-val rulesList3 = arrayOf(Rule0(), Rule1(), Rule2(), Rule3(), Rule4(),
-    Rule5Alt(), Rule6(), Rule7(), Rule8(), Rule9(),
-    Rule10(), Rule11Alt(), Rule12(), Rule13(), Rule14(), Rule15(), Rule16())
-val rulesList4 = arrayOf(Rule0(), Rule1(), Rule2(), Rule3(), Rule4(),
-    Rule5(), Rule6(), Rule7(), Rule8(), Rule9(),
-    Rule10Alt(), Rule11(), Rule12(), Rule13(), Rule14(), Rule15(), Rule16())
-val rulesList5 = arrayOf(Rule0(), Rule1(), Rule2(), Rule3(), Rule4(),
-    Rule5Alt(), Rule6(), Rule7(), Rule8(), Rule9(),
-    Rule10Alt(), Rule11(), Rule12(), Rule13(), Rule14(), Rule15(), Rule16())
-val rulesList6 = arrayOf(Rule0(), Rule1(), Rule2(), Rule3(), Rule4(),
-    Rule5(), Rule6(), Rule7(), Rule8(), Rule9(),
-    Rule10Alt(), Rule11Alt(), Rule12(), Rule13(), Rule14(), Rule15(), Rule16())
-val rulesList7 = arrayOf(Rule0(), Rule1(), Rule2(), Rule3(), Rule4(),
-    Rule5Alt(), Rule6(), Rule7(), Rule8(), Rule9(),
-    Rule10Alt(), Rule11Alt(), Rule12(), Rule13(), Rule14(), Rule15(), Rule16())
+
+// rules for Norwegian in the first house
+val rulesList0a = arrayOf(Rule0(), Rule1(), Rule2(), Rule3(), Rule4(),
+    Rule5(), Rule6(), Rule7(), Rule8(), Rule9A(),
+    Rule10(), Rule11(), Rule12(), Rule13(), Rule14A(), Rule15(), Rule16())
+val rulesList1a = arrayOf(Rule0(), Rule1(), Rule2(), Rule3(), Rule4(),
+    Rule5Alt(), Rule6(), Rule7(), Rule8(), Rule9A(),
+    Rule10(), Rule11(), Rule12(), Rule13(), Rule14A(), Rule15(), Rule16())
+val rulesList2a = arrayOf(Rule0(), Rule1(), Rule2(), Rule3(), Rule4(),
+    Rule5(), Rule6(), Rule7(), Rule8(), Rule9A(),
+    Rule10(), Rule11Alt(), Rule12(), Rule13(), Rule14A(), Rule15(), Rule16())
+val rulesList3a = arrayOf(Rule0(), Rule1(), Rule2(), Rule3(), Rule4(),
+    Rule5Alt(), Rule6(), Rule7(), Rule8(), Rule9A(),
+    Rule10(), Rule11Alt(), Rule12(), Rule13(), Rule14A(), Rule15(), Rule16())
+val rulesList4a = arrayOf(Rule0(), Rule1(), Rule2(), Rule3(), Rule4(),
+    Rule5(), Rule6(), Rule7(), Rule8(), Rule9A(),
+    Rule10Alt(), Rule11(), Rule12(), Rule13(), Rule14A(), Rule15(), Rule16())
+val rulesList5a = arrayOf(Rule0(), Rule1(), Rule2(), Rule3(), Rule4(),
+    Rule5Alt(), Rule6(), Rule7(), Rule8(), Rule9A(),
+    Rule10Alt(), Rule11(), Rule12(), Rule13(), Rule14A(), Rule15(), Rule16())
+val rulesList6a = arrayOf(Rule0(), Rule1(), Rule2(), Rule3(), Rule4(),
+    Rule5(), Rule6(), Rule7(), Rule8(), Rule9A(),
+    Rule10Alt(), Rule11Alt(), Rule12(), Rule13(), Rule14A(), Rule15(), Rule16())
+val rulesList7a = arrayOf(Rule0(), Rule1(), Rule2(), Rule3(), Rule4(),
+    Rule5Alt(), Rule6(), Rule7(), Rule8(), Rule9A(),
+    Rule10Alt(), Rule11Alt(), Rule12(), Rule13(), Rule14A(), Rule15(), Rule16())
+
+// rules for Norwegian in the last house
+val rulesList0b = arrayOf(Rule0(), Rule1(), Rule2(), Rule3(), Rule4(),
+    Rule5(), Rule6(), Rule7(), Rule8(), Rule9B(),
+    Rule10(), Rule11(), Rule12(), Rule13(), Rule14B(), Rule15(), Rule16())
+val rulesList1b = arrayOf(Rule0(), Rule1(), Rule2(), Rule3(), Rule4(),
+    Rule5Alt(), Rule6(), Rule7(), Rule8(), Rule9B(),
+    Rule10(), Rule11(), Rule12(), Rule13(), Rule14B(), Rule15(), Rule16())
+val rulesList2b = arrayOf(Rule0(), Rule1(), Rule2(), Rule3(), Rule4(),
+    Rule5(), Rule6(), Rule7(), Rule8(), Rule9B(),
+    Rule10(), Rule11Alt(), Rule12(), Rule13(), Rule14B(), Rule15(), Rule16())
+val rulesList3b = arrayOf(Rule0(), Rule1(), Rule2(), Rule3(), Rule4(),
+    Rule5Alt(), Rule6(), Rule7(), Rule8(), Rule9B(),
+    Rule10(), Rule11Alt(), Rule12(), Rule13(), Rule14B(), Rule15(), Rule16())
+val rulesList4b = arrayOf(Rule0(), Rule1(), Rule2(), Rule3(), Rule4(),
+    Rule5(), Rule6(), Rule7(), Rule8(), Rule9B(),
+    Rule10Alt(), Rule11(), Rule12(), Rule13(), Rule14B(), Rule15(), Rule16())
+val rulesList5b = arrayOf(Rule0(), Rule1(), Rule2(), Rule3(), Rule4(),
+    Rule5Alt(), Rule6(), Rule7(), Rule8(), Rule9B(),
+    Rule10Alt(), Rule11(), Rule12(), Rule13(), Rule14B(), Rule15(), Rule16())
+val rulesList6b = arrayOf(Rule0(), Rule1(), Rule2(), Rule3(), Rule4(),
+    Rule5(), Rule6(), Rule7(), Rule8(), Rule9B(),
+    Rule10Alt(), Rule11Alt(), Rule12(), Rule13(), Rule14B(), Rule15(), Rule16())
+val rulesList7b = arrayOf(Rule0(), Rule1(), Rule2(), Rule3(), Rule4(),
+    Rule5Alt(), Rule6(), Rule7(), Rule8(), Rule9B(),
+    Rule10Alt(), Rule11Alt(), Rule12(), Rule13(), Rule14B(), Rule15(), Rule16())
 
 /** the puzzle rules */
 interface Rule {
@@ -224,9 +252,22 @@ class Rule8: Rule {
 }
 
 // The Norwegian lives in the first house
-class Rule9: Rule {
+class Rule9A: Rule {
     override fun rule(houseRow: Array<House>, indx: Int): Boolean {
         if (indx != 0)
+            return false
+        if (houseRow[indx].nationality != Nat.none
+            && houseRow[indx].nationality != Nat.Norwegian)
+            return false
+        houseRow[indx].nationality = Nat.Norwegian
+        return true
+    }
+}
+
+// The Norwegian lives in the first house (alternative - last)
+class Rule9B: Rule {
+    override fun rule(houseRow: Array<House>, indx: Int): Boolean {
+        if (indx != NUM_HOUSES-1)
             return false
         if (houseRow[indx].nationality != Nat.none
             && houseRow[indx].nationality != Nat.Norwegian)
@@ -370,8 +411,8 @@ class Rule13: Rule {
     }
 }
 
-// The Norwegian lives next to the blue house
-class Rule14: Rule {
+// The Norwegian lives next to the blue house (Norwegian in the first house)
+class Rule14A: Rule {
     override fun rule(houseRow: Array<House>, indx: Int): Boolean {
         if (indx >= 4)
             return false
@@ -389,6 +430,29 @@ class Rule14: Rule {
                 return false
         houseRow[indx].nationality = Nat.Norwegian
         houseRow[indx+1].colour = Col.Blue
+        return true
+    }
+}
+
+// The Norwegian lives next to the blue house (alternative - Norwegian in the last house)
+class Rule14B: Rule {
+    override fun rule(houseRow: Array<House>, indx: Int): Boolean {
+        if (indx < 1)
+            return false
+        if (houseRow[indx].nationality != Nat.none
+            && houseRow[indx].nationality != Nat.Norwegian)
+            return false
+        if (houseRow[indx-1].colour != Col.none
+            && houseRow[indx-1].colour != Col.Blue)
+            return false
+        for (i in 0..4)
+            if(i != indx && houseRow[i].nationality == Nat.Norwegian)
+                return false
+        for (i in 0..4)
+            if(i != indx+1 && houseRow[i].colour == Col.Blue)
+                return false
+        houseRow[indx].nationality = Nat.Norwegian
+        houseRow[indx-1].colour = Col.Blue
         return true
     }
 }

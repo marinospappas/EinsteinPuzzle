@@ -2,6 +2,13 @@
 
 Einstein's 5 houses puzzle solver
 
+Please note:
+
+- there are three rules that mention "next to" or "to the left of"; each of them has been implemented in two variants as "next to" can be interpreted in two different ways
+- "the first house" rule has also been implemented in two variants (first from the left and first from the right)
+
+Based on the above we have 16 combinations of the 14 rules (in the program the two questions are also treated as rules so we have 16 rules in total)
+
 There are five houses.
 
 1. The Englishman lives in the red house.

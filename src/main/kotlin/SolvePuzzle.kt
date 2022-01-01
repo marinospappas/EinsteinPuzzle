@@ -1,9 +1,8 @@
 /**
  * Einstein 5-houses puzzle solver
  * @author Marinos Pappas
- * @version 1.0 29.12.2021
+ * @version 2.0 01.01.2022
  */
-import kotlin.system.exitProcess
 
 const val NUM_HOUSES = 5
 const val NUM_RULES = 16
@@ -13,7 +12,6 @@ var houseList = Array(NUM_HOUSES) { House() }
 var count = 1
 
 fun printHouses(h: Array<House>) {
-    println("Nationality\tColour\tPet\t\tDrink\tCigarettes")
     println("-------------------------------------------------")
     for (i in h.indices) {
         print("${h[i].nationality}\t")
@@ -60,19 +58,27 @@ fun solveIt(rules: Array<Rule>, houses: Array<House>, ruleIndx: Int): Array<Hous
 
 fun main (args: Array<String>) {
 
-    val rulesList = arrayListOf(rulesList0, rulesList1, rulesList2, rulesList3,
-        rulesList4, rulesList5, rulesList6, rulesList7)
+    val rulesList = arrayListOf(rulesList0a, rulesList1a, rulesList2a, rulesList3a,
+        rulesList4a, rulesList5a, rulesList6a, rulesList7a,
+        rulesList0b, rulesList1b, rulesList2b, rulesList3b,
+        rulesList4b, rulesList5b, rulesList6b, rulesList7b)
 
-    val t1 = System.nanoTime()
-    for (rules in rulesList) {  // try all 8 rule sets (different combinations of "next to" rules)
+    println("Trying all solutions")
+    println("\nNationality\tColour\tPet\t\tDrink\tCigarettes")
+    val t1 = System.currentTimeMillis()
+    var solutionsCount = 0
+    for (rules in rulesList) {  // try all 16 rule sets (different combinations of "next to" rules)
         val solution = solveIt(rules, houseList, 1)
         if (solution != null) {
-            val t2 = System.nanoTime()
-            val tdiff: Long = (t2-t1)/1000
-            println("Solved Puzzle $count attempts $tdiff millisecs")
+            ++solutionsCount
             printHouses(solution)
-            exitProcess(0)
         }
     }
-    println("Could not solve Puzzle")
+    val t2 = System.currentTimeMillis()
+    val tdiff: Long = t2-t1
+    if (solutionsCount > 0)
+        println("\nSolved Puzzle $solutionsCount solutions")
+    else
+        println("\nCould not solve Puzzle")
+    println("$count attempts $tdiff millisecs")
 }
