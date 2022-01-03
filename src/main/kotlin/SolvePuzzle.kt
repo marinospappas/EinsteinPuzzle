@@ -1,7 +1,7 @@
 /**
  * Einstein 5-houses puzzle solver
  * @author Marinos Pappas
- * @version 2.0 01.01.2022
+ * @version 2.1 03.01.2022
  */
 
 const val NUM_HOUSES = 5
@@ -35,8 +35,10 @@ fun cloneHouses(houses: Array<House>): Array<House> {
     return h
 }
 
-fun solveIt(rules: Array<Rule>, houses: Array<House>, ruleIndx: Int): Array<House>? {
+fun solveIt(rules: Array<Rule>, houses: Array<House>, ruleIndx: Int, debug: Boolean = false): Array<House>? {
     var h = cloneHouses(houses)
+    if (debug)
+        println("** trying rule $ruleIndx")
     if (ruleIndx <= NUM_RULES) {
         for (houseIndx in houses.indices) {
             // apply next rule
@@ -44,14 +46,23 @@ fun solveIt(rules: Array<Rule>, houses: Array<House>, ruleIndx: Int): Array<Hous
             val result = rules[ruleIndx].rule(h, houseIndx)
             if (!result)
                 continue    // could not apply rule - try next house
-            val s = solveIt(rules, h, ruleIndx+1)   // go and try to apply the next rule
+            if (debug) {
+                println(">> rule $ruleIndx successfully applied for house $houseIndx")
+                print(">>")
+                printHouses(h)
+            }
+            val s = solveIt(rules, h, ruleIndx+1, debug)   // go and try to apply the next rule
             if (s != null) {
                 return s    // good solution
             }
         }
         ++count
+        if (debug)
+            println(">> rule $ruleIndx could not be applied")
         return null   // run out of houses - cannot solve
     } else {
+        if (debug)
+            println(">> all rules applied - puzzle solved")
         return h
     }
 }
@@ -59,9 +70,9 @@ fun solveIt(rules: Array<Rule>, houses: Array<House>, ruleIndx: Int): Array<Hous
 fun main (args: Array<String>) {
 
     val rulesList = arrayListOf(rulesList0a, rulesList1a, rulesList2a, rulesList3a,
-        rulesList4a, rulesList5a, rulesList6a, rulesList7a,
-        rulesList0b, rulesList1b, rulesList2b, rulesList3b,
-        rulesList4b, rulesList5b, rulesList6b, rulesList7b)
+                                rulesList4a, rulesList5a, rulesList6a, rulesList7a,
+                                rulesList0b, rulesList1b, rulesList2b, rulesList3b,
+                                rulesList4b, rulesList5b, rulesList6b, rulesList7b)
 
     println("Trying all solutions")
     println("\nNationality\tColour\tPet\t\tDrink\tCigarettes")

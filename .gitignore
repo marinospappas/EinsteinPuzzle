@@ -18,6 +18,8 @@ prog*.tnsl
 *.kotlin_module
 *.kts
 
+debug.txt
+
 gradlew
 gradle.*
 gradlew.*
