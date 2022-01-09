@@ -93,7 +93,7 @@ then we implement the next rule on the first house that is possible to implement
 The algorithm ends when all the rules have been successfully applied.
 
 This method gets to the solution in only **28 attempts** (a reduction by a factor of more than 100 compared to v1)
-but only in half the time. This is more-or-less the number of attempts a puzzle-inclined human would take to solve it.
+but only in **half the time**. This is more-or-less the number of attempts a puzzle-inclined human would take to solve it.
 
 The reason for the negligible improvement in the time to solve is that the logic used to apply the rules is now significantly more complicated,
 so an attempt to apply a rule takes much longer than in version one. The significant reduction in the number of attempts makes it worth it though.
@@ -105,3 +105,19 @@ which made the program (a) very long and (b) not easy to scale.
 
 In version 3 the logic that applies the rules has been coded as a generic function and this allows each rule to be 
 encoded as a set of data (that this function is called to apply)
+
+## A Word on Efficiency
+
+Looking at the number of attempts and the total time to solve in each of the three versions above, 
+we can calculate the time each algorithm takes for each iteration:
+```
+version 0: 0.000163 millisecs/iteration
+version 1: 0.022 millisecs/iteration
+version 2: 1.57 millisecs/iteration
+```
+It's really interesting to see how the super-dumb version is by far the fastest per iteration, 
+the moderately clever one is almost 100 times slower per iteration than the dumb one,
+while the super-intelligent one is another 100 times slower than the medium-clever one!!
+
+We can clearly see which algorithm is the fastest one but which one is the most efficient? 
+Which one would you prefer? 
