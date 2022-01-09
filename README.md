@@ -92,7 +92,7 @@ then we implement the next rule on the first house that is possible to implement
 
 The algorithm ends when all the rules have been successfully applied.
 
-This method gets to the solution in only 28 attempts (a reduction by a factor of more than 100 compared to v1)
+This method gets to the solution in only **28 attempts** (a reduction by a factor of more than 100 compared to v1)
 but only in half the time. This is more-or-less the number of attempts a puzzle-inclined human would take to solve it.
 
 The reason for the negligible improvement in the time to solve is that the logic used to apply the rules is now significantly more complicated,
