@@ -1,4 +1,4 @@
-#The Puzzle rules
+# The Puzzle rules
 
 There are five houses.
 
